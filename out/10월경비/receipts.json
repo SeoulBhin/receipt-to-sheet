@@ -1,0 +1,156 @@
+[
+  {
+    "file": "samples/IMG_0412.png",
+    "date": "2026-10-02",
+    "merchant": "솔바람커피 예시점",
+    "items": [
+      {"name": "아메리카노", "qty": 2, "unit_price": 4500, "amount": 9000},
+      {"name": "카페라떼", "qty": 1, "unit_price": 5000, "amount": 5000}
+    ],
+    "supply": 12727,
+    "vat": 1273,
+    "total": 14000,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/IMG_0415.png",
+    "date": "2026-10-06",
+    "merchant": "한결운수",
+    "items": [
+      {"name": "요금", "qty": 1, "unit_price": 13800, "amount": 13800}
+    ],
+    "supply": null,
+    "vat": null,
+    "total": 13800,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/IMG_0419.png",
+    "date": "2026-10-08",
+    "merchant": "다온문구 예시점",
+    "items": [
+      {"name": "A4용지 500매 x5", "qty": 2, "unit_price": 24000, "amount": 48000},
+      {"name": "볼펜 12입", "qty": 1, "unit_price": 9600, "amount": 9600},
+      {"name": "포스트잇", "qty": 3, "unit_price": 2300, "amount": 6900},
+      {"name": "보드마커", "qty": 2, "unit_price": 3200, "amount": 6400}
+    ],
+    "supply": 64455,
+    "vat": 6445,
+    "total": 70900,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/IMG_0423.png",
+    "date": "2026-10-14",
+    "merchant": "청솔식당",
+    "items": [
+      {"name": "김치찌개", "qty": 3, "unit_price": 9000, "amount": 27000},
+      {"name": "제육볶음", "qty": 2, "unit_price": 10000, "amount": 20000},
+      {"name": "공기밥", "qty": 2, "unit_price": 1000, "amount": 2000},
+      {"name": "음료", "qty": 2, "unit_price": 2000, "amount": 4000}
+    ],
+    "supply": 48182,
+    "vat": 4818,
+    "total": 53000,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/IMG_0427.png",
+    "date": "2026-10-08",
+    "merchant": "다온문구 예시점",
+    "items": [
+      {"name": "A4용지 500매 x5", "qty": 2, "unit_price": 24000, "amount": 48000},
+      {"name": "볼펜 12입", "qty": 1, "unit_price": 9600, "amount": 9600},
+      {"name": "포스트잇", "qty": 3, "unit_price": 2300, "amount": 6900},
+      {"name": "보드마커", "qty": 2, "unit_price": 3200, "amount": 6400}
+    ],
+    "supply": 64455,
+    "vat": 6445,
+    "total": 70900,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/IMG_0431.png",
+    "date": "2026-10-20",
+    "merchant": "가람스퀘어 주차장",
+    "items": [
+      {"name": "주차요금 2시간", "qty": 1, "unit_price": 6000, "amount": 6000}
+    ],
+    "supply": 5455,
+    "vat": 545,
+    "total": 6000,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/IMG_0436.png",
+    "date": "2026-10-23",
+    "merchant": "나래퀵",
+    "items": [],
+    "supply": null,
+    "vat": null,
+    "total": null,
+    "payment": "카드",
+    "status": "확인 필요",
+    "note": "품목(퀵배송 역삼-성수)의 수량·단가·금액과 공급가액·부가세·합계가 얼룩에 가려 읽을 수 없음"
+  },
+  {
+    "file": "samples/doc_01.pdf",
+    "date": "2026-10-10",
+    "merchant": "새솔오피스",
+    "items": [
+      {"name": "모니터암", "qty": 2, "unit_price": 45000, "amount": 90000},
+      {"name": "무선 키보드", "qty": 3, "unit_price": 38000, "amount": 114000},
+      {"name": "무선 마우스", "qty": 3, "unit_price": 22000, "amount": 66000}
+    ],
+    "supply": 270000,
+    "vat": 27000,
+    "total": 297000,
+    "payment": "계좌이체",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples/doc_02.pdf",
+    "date": "2026-10-31",
+    "merchant": "구름스택",
+    "items": [
+      {"name": "컴퓨팅 (10월)", "qty": 1, "unit_price": 184000, "amount": 184000},
+      {"name": "스토리지 (10월)", "qty": 1, "unit_price": 23500, "amount": 23500},
+      {"name": "데이터 전송 (10월)", "qty": 1, "unit_price": 12500, "amount": 12500}
+    ],
+    "supply": 220000,
+    "vat": 22000,
+    "total": 242000,
+    "payment": "카드",
+    "status": "ok",
+    "note": "법인카드로 11월 5일 자동 결제 예정"
+  },
+  {
+    "file": "samples/doc_03.pdf",
+    "date": "2026-10-17",
+    "merchant": "온결인쇄",
+    "items": [
+      {"name": "명함 (200매)", "qty": 4, "unit_price": 25000, "amount": 100000},
+      {"name": "리플릿 A4 2단", "qty": 500, "unit_price": 280, "amount": 140000},
+      {"name": "실사 배너", "qty": 1, "unit_price": 60000, "amount": 60000}
+    ],
+    "supply": 280000,
+    "vat": 28000,
+    "total": 308000,
+    "payment": "계좌이체",
+    "status": "ok",
+    "note": ""
+  }
+]

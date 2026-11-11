@@ -1,0 +1,53 @@
+[
+  {
+    "file": "samples_blur/IMG_0501.png",
+    "date": "2026-10-14",
+    "merchant": "청솔식당",
+    "items": [
+      {"name": "김치찌개", "qty": 3, "unit_price": 9000, "amount": 27000},
+      {"name": "제육볶음", "qty": 2, "unit_price": 10000, "amount": 20000},
+      {"name": "공기밥", "qty": 2, "unit_price": 1000, "amount": 2000},
+      {"name": "음료", "qty": 2, "unit_price": 2000, "amount": 4000}
+    ],
+    "supply": 48182,
+    "vat": 4818,
+    "total": 53000,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples_blur/IMG_0502.png",
+    "date": "2026-10-14",
+    "merchant": "청솔식당",
+    "items": [
+      {"name": "김치찌개", "qty": 3, "unit_price": 9000, "amount": 27000},
+      {"name": "제육볶음", "qty": 2, "unit_price": 10000, "amount": 20000},
+      {"name": "공기밥", "qty": 2, "unit_price": 1000, "amount": 2000},
+      {"name": "음료", "qty": 2, "unit_price": 2000, "amount": 4000}
+    ],
+    "supply": 48182,
+    "vat": 4818,
+    "total": 53000,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  },
+  {
+    "file": "samples_blur/IMG_0503.png",
+    "date": "2026-10-08",
+    "merchant": "다온문구 예시점",
+    "items": [
+      {"name": "A4용지 500매 x5", "qty": 2, "unit_price": 24000, "amount": 48000},
+      {"name": "볼펜 12입", "qty": 1, "unit_price": 9600, "amount": 9600},
+      {"name": "포스트잇", "qty": 3, "unit_price": 2300, "amount": 6900},
+      {"name": "보드마커", "qty": 2, "unit_price": 3200, "amount": 6400}
+    ],
+    "supply": 64455,
+    "vat": 6445,
+    "total": 70900,
+    "payment": "카드",
+    "status": "ok",
+    "note": ""
+  }
+]
