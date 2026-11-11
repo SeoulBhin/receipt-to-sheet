@@ -84,7 +84,7 @@ def arithmetic(r):
     s = sum(it["amount"] for it in r["items"])
     # 카드 영수증은 부가세 포함 금액(품목 합 = 합계), 청구서는 공급가 기준(품목 합 = 공급가액)
     if s not in (r["total"], r.get("supply")):
-        target = f"공급가액 {r['supply']:,}" if r.get("supply") is not None else f"합계 {r['total']:,}"
+        target = f"합계 {r['total']:,}" + (f" · 공급가액 {r['supply']:,}" if r.get("supply") is not None else "")
         why.append(f"품목 합 {s:,} != {target}")
     if r.get("supply") is not None and r["supply"] + r["vat"] != r["total"]:
         why.append(f"공급가액 {r['supply']:,} + 부가세 {r['vat']:,} != 합계 {r['total']:,}")
