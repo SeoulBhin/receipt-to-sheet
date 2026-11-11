@@ -159,7 +159,7 @@ def write_xlsx(path, ok, flagged):
             for c in row:
                 if is_int(c.value):
                     c.number_format = "#,##0"
-        for col, w in zip("ABCDEFGH", ([12, 18, 22, 12, 10, 12, 10, 14] if sh is ws else [14, 12, 18, 12, 70])):
+        for col, w in zip("ABCDEFGH", ([12, 18, 22, 12, 10, 12, 10, 14] if sh is ws else [14, 12, 18, 12, 100])):
             sh.column_dimensions[col].width = w
     if flagged:
         wf.sheet_properties.tabColor = "E8590C"
