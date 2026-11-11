@@ -1,7 +1,11 @@
 """python test_check.py — 검산이 맞게 잡고 맞게 통과시키는지. 값은 예시 영수증과 무관하게 지어낸 것."""
 import copy
+import tempfile
+from pathlib import Path
 
-from check import review
+from openpyxl import load_workbook
+
+from check import review, write_xlsx
 
 OK = {"file": "samples/a.png", "date": "2026-01-05", "merchant": "가상상점", "payment": "카드",
       "items": [{"name": "물품", "qty": 2, "unit_price": 1100, "amount": 2200}, {"name": "기타", "qty": 1, "unit_price": 1100, "amount": 1100}],
@@ -54,4 +58,15 @@ assert len(ok) == 1 and "중복 의심" in fl[0][1][0]
 # 확인 필요: 읽은 쪽이 판독 불가로 표시 — 금액이 null 이어도 형식 오류 아님
 e, ok, fl = run({"file": "samples/a.png", "status": "확인 필요", "note": "합계 부분이 가려짐", "total": None})
 assert e == [] and fl[0][1] == ["읽은 쪽 표시: 합계 부분이 가려짐"]
+# 형식 오류: 확인 필요라도 적은 칸은 형식이 맞아야 한다
+assert any("total 은 정수 또는 null" in e for e in run({"file": "samples/a.png", "status": "확인 필요", "note": "x", "total": "1,000"})[0])
+assert any("date 는 YYYY-MM-DD 또는 null" in e for e in run({"file": "samples/a.png", "status": "확인 필요", "note": "x", "date": "1/5"})[0])
+
+# 엑셀: 영수증 글자가 = 로 시작해도 수식으로 들어가지 않는다
+evil = edit(merchant='=HYPERLINK("http://x","y")', items=[{"name": "+1+1", "qty": 1, "unit_price": 3300, "amount": 3300}])
+with tempfile.TemporaryDirectory() as d:
+    _, ok, fl = run(evil)
+    write_xlsx(Path(d) / "t.xlsx", ok, fl)
+    ws = load_workbook(Path(d) / "t.xlsx")["경비"]
+    assert ws["B2"].data_type == "s" and ws["B2"].value.startswith("'=") and ws["C2"].value == "'+1+1", (ws["B2"].value, ws["C2"].value)
 print("ok")

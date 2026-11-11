@@ -50,16 +50,28 @@ def main(out_dir, input_dir):
         r = subprocess.run(["git", "-c", "core.hooksPath=", "clone", "-q", "--depth", "1", REPO, str(clean)],
                            cwd=tmp, capture_output=True, text=True, encoding="utf-8")
         if r.returncode:
-            sys.exit("✗ 원본 저장소를 받지 못했다: " + r.stderr.strip())
+            sys.exit("✗ 원본 저장소를 받지 못했다(주소·네트워크 확인)")
         changed = [f for f in CHECKER if not same(HERE / f, clean / f)]
         if changed:
             print("✗ 검사기가 바뀌었다:", ", ".join(changed), "→ 원본으로 덮어쓴다", flush=True)
             for f in changed:
                 put(clean / f, HERE / f)
+        # 저장소에 든 예시 영수증으로 검사할 때는 작업 폴더 쪽 파일을 믿지 않는다 — 세션이 원본 이미지를 바꿔
+        # 잘못 읽은 값을 "맞게" 만들 수 있어서. 원본 쪽 samples 로 검사하고, 다르면 실패 처리한다.
+        if Path(inputs) == HERE / "samples":
+            bad = sorted({p.name for p in (HERE / "samples").iterdir()} ^ {p.name for p in (clean / "samples").iterdir()})
+            bad += [p.name for p in (clean / "samples").iterdir() if not same(HERE / "samples" / p.name, p)]
+            if bad:
+                print("✗ 예시 영수증이 원본과 다르다:", ", ".join(sorted(set(bad))), "→ 원본 쪽 파일로 검사한다", flush=True)
+                changed.append("samples")
+            inputs = str(clean / "samples")
         dst = clean / "out" / out.name
         dst.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src, dst / "receipts.json")
-        py = [sys.executable, "-E"]  # PYTHONPATH 같은 환경변수로 끼어드는 코드를 막는다
+        # -E: PYTHONPATH 같은 환경변수로 끼어드는 코드를 막는다. -s·-I 는 안 쓴다(openpyxl 이 사용자 site-packages 에 있음).
+        # 한계: 세션은 같은 Windows 사용자로 돈다. 사용자 site-packages·python.exe 를 고칠 수 있는 세션이면
+        # 어떤 플래그로도 못 막는다 — 그 수준은 세션을 다른 계정·샌드박스에서 돌려서 막을 일이다
+        py = [sys.executable, "-E"]
         ok = subprocess.run([*py, "test_check.py"], cwd=clean).returncode == 0
         ok = subprocess.run([*py, "check.py", f"out/{out.name}", inputs], cwd=clean).returncode == 0 and ok
         if ok:

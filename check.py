@@ -34,6 +34,14 @@ def format_errors(r):
     if r["status"] == "확인 필요":
         if not str(r.get("note") or "").strip():
             e.append("확인 필요인데 note(이유)가 없다")
+        # 못 읽은 칸은 null 이어도 되지만, 적었다면 형식은 맞아야 한다(엑셀 확인 필요 시트에 그대로 들어간다)
+        d = r.get("date")
+        if d is not None and not (isinstance(d, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", d)):
+            e.append(f"date 는 YYYY-MM-DD 또는 null: {d!r}")
+        if r.get("total") is not None and not is_int(r["total"]):
+            e.append(f"total 은 정수 또는 null: {r['total']!r}")
+        if r.get("merchant") is not None and not isinstance(r["merchant"], str):
+            e.append(f"merchant 는 문자열 또는 null: {r['merchant']!r}")
         return e
     d = r.get("date")
     if not (isinstance(d, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", d)):
@@ -114,6 +122,11 @@ def review(rows, files):
     return errors, ok, flagged
 
 
+def safe(row):
+    """영수증에서 읽은 글자가 = + - @ 로 시작하면 엑셀이 수식으로 실행한다 — 앞에 ' 를 붙여 글자로 둔다."""
+    return [f"'{v}" if isinstance(v, str) and v[:1] in ("=", "+", "-", "@", "\t", "\r") else v for v in row]
+
+
 def write_xlsx(path, ok, flagged):
     wb = Workbook()
     ws = wb.active
@@ -123,7 +136,7 @@ def write_xlsx(path, ok, flagged):
     for r in sorted(ok, key=lambda r: r["date"]):
         items = r["items"]
         desc = items[0]["name"] + (f" 외 {len(items) - 1}건" if len(items) > 1 else "")
-        ws.append([r["date"], r["merchant"], desc, r.get("supply"), r.get("vat"), r["total"], r["payment"], Path(r["file"]).name])
+        ws.append(safe([r["date"], r["merchant"], desc, r.get("supply"), r.get("vat"), r["total"], r["payment"], Path(r["file"]).name]))
     n = ws.max_row
     ws.append([])
     ws.append(["합계", f"{len(ok)}건", "", sum(r.get("supply") or 0 for r in ok), sum(r.get("vat") or 0 for r in ok),
@@ -136,7 +149,7 @@ def write_xlsx(path, ok, flagged):
     wf = wb.create_sheet("확인 필요")
     wf.append(["파일", "날짜", "가맹점", "합계", "사유"])
     for r, why in flagged:
-        wf.append([Path(r["file"]).name, r.get("date"), r.get("merchant"), r.get("total"), " / ".join(why)])
+        wf.append(safe([Path(r["file"]).name, r.get("date"), r.get("merchant"), r.get("total"), " / ".join(why)]))
 
     for sh in (ws, wf):
         for c in sh[1]:
