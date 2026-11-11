@@ -44,7 +44,12 @@ def main(out_dir, input_dir):
     src = out / "receipts.json"
     if src.is_symlink() or not src.resolve().is_relative_to(HERE):
         sys.exit("✗ receipts.json 이 링크다 — 멈춘다")
-    inputs = str(Path(input_dir).resolve())
+    given = Path(os.path.abspath(input_dir))   # 링크는 따라가지 않고 .. 만 정리
+    for d in (given, HERE / "samples"):
+        if d.is_symlink() or d.is_junction():
+            sys.exit(f"✗ {d} 가 링크다(다른 폴더를 원본처럼 보이게 할 수 있다) — 멈춘다")
+    inputs = str(given)
+    use_clean_samples = given == HERE / "samples" or given.resolve().is_relative_to((HERE / "samples").resolve())
     with tempfile.TemporaryDirectory() as tmp:
         clean = Path(tmp) / "repo"
         r = subprocess.run(["git", "-c", "core.hooksPath=", "clone", "-q", "--depth", "1", REPO, str(clean)],
@@ -58,7 +63,7 @@ def main(out_dir, input_dir):
                 put(clean / f, HERE / f)
         # 저장소에 든 예시 영수증으로 검사할 때는 작업 폴더 쪽 파일을 믿지 않는다 — 세션이 원본 이미지를 바꿔
         # 잘못 읽은 값을 "맞게" 만들 수 있어서. 원본 쪽 samples 로 검사하고, 다르면 실패 처리한다.
-        if Path(inputs) == HERE / "samples":
+        if use_clean_samples:
             bad = sorted({p.name for p in (HERE / "samples").iterdir()} ^ {p.name for p in (clean / "samples").iterdir()})
             bad += [p.name for p in (clean / "samples").iterdir() if not same(HERE / "samples" / p.name, p)]
             if bad:
